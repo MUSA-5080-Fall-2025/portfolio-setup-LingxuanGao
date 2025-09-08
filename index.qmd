@@ -15,12 +15,10 @@ Advanced spatial analysis and data science for urban planning and public policy.
 - **Final Project:** Capstone modeling challenge
 
 ## About Me
-- **Name:** Lingxuan Gao (Lucian)
-- **Background:** Urban Planning
-- **Email:** gao459@upenn.edu
-- **GitHub Username:** LingxuanGao
-- I'm very interested in the combination of urban content and technical skills.
+Name: Lingxuan Gao (Lucian)<br>
+Background: Urban Planning<br>
+I'm very interested in the combination of urban content and technical skills.
 
 ## Contact
 - Email: [gao459@upenn.edu]
-- GitHub: [@LingxuanGaoyour-username]
+- GitHub: [@LingxuanGao]
