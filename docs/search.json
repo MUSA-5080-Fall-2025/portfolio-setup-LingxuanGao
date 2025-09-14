@@ -4,21 +4,21 @@
     "href": "weekly-notes/week-01-notes.html",
     "title": "Week 1 Notes - Course Introduction",
     "section": "",
-    "text": "[List main concepts from lecture]\n[Technical skills covered]"
+    "text": "[List main concepts from lecture] 1.1 Github: repo;commit;push;pull\n\n1.2 Github workflow: edit files in rstudio-&gt;commit changes-&gt;push to github\n2.1 quarto - [Technical skills covered]"
   },
   {
     "objectID": "weekly-notes/week-01-notes.html#key-concepts-learned",
     "href": "weekly-notes/week-01-notes.html#key-concepts-learned",
     "title": "Week 1 Notes - Course Introduction",
     "section": "",
-    "text": "[List main concepts from lecture]\n[Technical skills covered]"
+    "text": "[List main concepts from lecture] 1.1 Github: repo;commit;push;pull\n\n1.2 Github workflow: edit files in rstudio-&gt;commit changes-&gt;push to github\n2.1 quarto - [Technical skills covered]"
   },
   {
     "objectID": "weekly-notes/week-01-notes.html#coding-techniques",
     "href": "weekly-notes/week-01-notes.html#coding-techniques",
     "title": "Week 1 Notes - Course Introduction",
     "section": "Coding Techniques",
-    "text": "Coding Techniques\n\n[New R functions or approaches]\n[Quarto features learned]"
+    "text": "Coding Techniques\n\n[New R functions or approaches]\n[Quarto features learned] YAML header R code chunk"
   },
   {
     "objectID": "weekly-notes/week-01-notes.html#questions-challenges",
