@@ -5,11 +5,20 @@ date: "2025-09-08"
 
 ## Key Concepts Learned
 - [List main concepts from lecture]
+1.1 Github:
+repo;commit;push;pull
+
+1.2 Github workflow:
+edit files in rstudio->commit changes->push to github
+
+2.1 quarto 
 - [Technical skills covered]
 
 ## Coding Techniques
 - [New R functions or approaches]
 - [Quarto features learned]
+YAML header
+R code chunk
 
 ## Questions & Challenges
 - [What I didn't fully understand]
