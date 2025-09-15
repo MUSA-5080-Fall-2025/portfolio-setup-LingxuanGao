@@ -16,6 +16,8 @@ edit files in rstudio->commit changes->push to github
 
 ## Coding Techniques
 - [New R functions or approaches]
+dplyr:
+-Data Manipulation Pipeline
 - [Quarto features learned]
 YAML header
 R code chunk
