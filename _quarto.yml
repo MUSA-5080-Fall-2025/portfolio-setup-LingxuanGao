@@ -5,16 +5,15 @@ project:
 website:
   title: "Lingxuan Gao - MUSA 5080 Portfolio"
   navbar:
-  left:
-    - href: index.qmd
-      text: Home
-    - href: weekly-notes/
-      text: Weekly Notes
-    - text: Labs
-      menu:
-        - href: labs/lab_0/
-          text: Lab 0: dplyr Basics
-
+    left:
+      - href: index.qmd
+        text: Home
+      - href: weekly-notes/
+        text: Weekly Notes
+      - text: Labs
+        menu:
+          - href: labs/lab_0/
+            text: "Lab 0: dplyr Basics"
 format:
   html:
     theme: cosmo
