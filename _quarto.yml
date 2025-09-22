@@ -12,6 +12,8 @@ website:
         menu: 
           - href: weekly-notes/week-01-notes.qmd
             text: "Weekly Notes 01: Introduction to R and dplyr"
+          - href: weekly-notes/week-02-notes.qmd
+            text: "Weekly Notes 02: Algorithmic Decision Making & The Census"
       - text: Labs
         menu:
           - href: labs/lab_0/lab0_template.qmd
