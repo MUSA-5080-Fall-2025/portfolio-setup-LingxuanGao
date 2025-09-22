@@ -8,8 +8,8 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: weekly-notes/
-        text: Weekly Notes
+      - href: weekly-notes/week-01-notes.qmd
+        text: "Weekly Notes 01: Introduction to R and dplyr"
       - text: Labs
         menu:
           - href: labs/lab_0/
