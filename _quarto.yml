@@ -8,13 +8,15 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: weekly-notes/week-01-notes.qmd
-        text: "Weekly Notes 01: Introduction to R and dplyr"
+      - text: Weekly Notes
+        menu: 
+          - href: weekly-notes/week-01-notes.qmd
+            text: "Weekly Notes 01: Introduction to R and dplyr"
       - text: Labs
         menu:
-          - href: labs/lab_0/
+          - href: labs/lab_0/lab0_template.qmd
             text: "Lab 0: dplyr Basics"
-          - href: labs/lab_1/           
+          - href: labs/lab_1/assignment1_template.qmd          
             text: "Lab 1: Census Data Quality for Policy Decisions"
 format:
   html:
