@@ -439,7 +439,7 @@ Data aggregation of small tracts to reduce error]
 ## Questions for Further Investigation
 
 [1.Do high-MOE communities show spatial clustering, such as being concentrated in rural areas?
-Beyond population size and racial composition, are economic factors (e.g., poverty rates, housing types) also systematically related to data quality?]
+2.Beyond population size and racial composition, are economic factors (e.g., poverty rates, housing types) also systematically related to data quality?]
 
 # Technical Notes
 
