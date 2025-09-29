@@ -1,7 +1,7 @@
 ---
 title: "Assignment 1: Census Data Quality for Policy Decisions"
 subtitle: "Evaluating Data Reliability for Algorithmic Decision-Making"
-author: "Your Name Here"
+author: "Lingxuan Gao"
 date: today
 format: 
   html:
@@ -18,7 +18,7 @@ execute:
 
 ## Scenario
 
-You are a data analyst for the **[Your State] Department of Human Services**. The department is considering implementing an algorithmic system to identify communities that should receive priority for social service funding and outreach programs. Your supervisor has asked you to evaluate the quality and reliability of available census data to inform this decision.
+You are a data analyst for the **[Pennsylvania] Department of Human Services**. The department is considering implementing an algorithmic system to identify communities that should receive priority for social service funding and outreach programs. Your supervisor has asked you to evaluate the quality and reliability of available census data to inform this decision.
 
 Drawing on our Week 2 discussion of algorithmic bias, you need to assess not just what the data shows, but how reliable it is and what communities might be affected by data quality issues.
 
@@ -64,7 +64,7 @@ readRenviron("~/.Renviron")
 my_state <- "Pennsylvania"
 ```
 
-**State Selection:** I have chosen **[Pennsylvania]** for this analysis because: [Because it's where I am.]
+**State Selection:** I have chosen **[Pennsylvania]** for this analysis because: [It's where I am.]
 
 # Part 2: County-Level Resource Assessment
 
@@ -103,6 +103,7 @@ county_data <- county_data %>%
 
 # Display the first few rows
 head(county_data)
+glimpse(county_data)
 ```
 
 ## 2.2 Data Quality Assessment
@@ -156,23 +157,23 @@ reliability_summary
 
 ```{r high-uncertainty}
 # Create table of top 5 counties by MOE percentage
-top5_uncertain <- county_data %>%
+top5_MOE <- county_data %>%
   arrange(desc(moe_pct_income)) %>%
   slice(1:5) %>%
   select(NAME, median_incomeE, median_incomeM, moe_pct_income, reliability)
 
 # Format as table with kable() - include appropriate column names and caption
 knitr::kable(
-  top5_uncertain,
+  top5_MOE,
   digits = 2,
-  caption = "Top 5 Counties with Highest Income Estimate Uncertainty"
+  caption = "Top 5 Counties with the highest MOE percentages"
 )
 
 ```
 
 **Data Quality Commentary:**
 
-[These results show that some counties face higher data uncertainty, meaning algorithms that rely heavily on these estimates may misallocate resources or services. Counties with smaller populations or more challenging survey conditions tend to have larger margins of error, making them more vulnerable to being misclassified or underserved by algorithms. Such areas require additional manual review or supplemental data in policy applications.]
+[The five counties have income margin of error percentages between 6% and 10%. They are all in the “Moderate Confidence” group. This means the estimates are usable but have some uncertainty. Forest and Sullivan counties are close to 10%, so the true median income may be different from the estimate.]
 
 # Part 3: Neighborhood-Level Analysis
 
@@ -196,13 +197,14 @@ knitr::kable(
   selected_counties %>%
     select(NAME, median_incomeE, moe_pct_income, reliability),
   digits = 2,
-  col.names = c("County", "Median Income", "MOE %", "Reliability"),
+  col.names = c("county name", "median income", "MOE percentage", "reliability category"),
   caption = "Selected Counties by MOE Percentage (Different Confidence Levels)"
 )
 # Show: county name, median income, MOE percentage, reliability category
 ```
 
-**Comment on the output:** [write something :)]
+**Comment on the output:** 
+[In this result, Adams County's data is relatively stable and reliable. For Cameron County,the data are still usable, but the estimate comes with more uncertainty.]
 
 ## 3.2 Tract-Level Demographics
 
@@ -316,10 +318,7 @@ tract_demo <- tract_demo %>%
 # Use logical operators (| for OR) in an ifelse() statement
 tract_demo <- tract_demo %>%
   mutate(
-    high_moe_flag = ifelse(
-      moe_pct_white > 15 | moe_pct_black > 15 | moe_pct_hispanic > 15,
-      TRUE, FALSE
-    )
+    high_moe_flag = moe_pct_white > 15 | moe_pct_black > 15 | moe_pct_hispanic > 15,
   )
 
 # Create summary statistics showing how many tracts have data quality issues
@@ -357,12 +356,12 @@ pattern_summary <- tract_demo %>%
 knitr::kable(
   pattern_summary,
   digits = 1,
-  col.names = c("High MOE?", "Tracts", "Avg Population", "Avg % White", "Avg % Black", "Avg % Hispanic"),
+  col.names = c("High MOE?", "Tracts", "Avg Population", "Avg White (%)", "Avg Black (%)", "Avg Hispanic (%)"),
   caption = "Community Characteristics by Data Reliability"
 )
 ```
 
-**Pattern Analysis:** [Describe any patterns you observe. Do certain types of communities have less reliable data? What might explain this?]
+**Pattern Analysis:** [These high-MOE tracts have smaller populations, about 3,700 people on average. They are mostly White, with low Black and Hispanic shares. Small sample sizes make their data less stable.]
 
 
 # Part 5: Policy Recommendations
@@ -379,7 +378,10 @@ knitr::kable(
 
 **Executive Summary:**
 
-[Your integrated 4-paragraph summary here]
+[1.The analysis shows that data quality differences are not random but systematic. Smaller tracts tend to have higher margins of error, with income and demographic data being less reliable.
+2.Based on my analysis, the communities which are often small and White-majority, face the greatest risk of algorithmic bias.
+3.The main drivers are survey design and population structure. Small samples and demographic homogeneity lead to unstable estimates.
+4.The Department should implement MOE checks before data use, flagging tracts with MOE above 15% for review. For small-population tracts, aggregation or multi-year averages should be used. Equity monitoring should also be implemented to ensure high-MOE communities are not overlooked in resource allocation.]
 
 ## 6.3 Specific Recommendations
 
@@ -393,23 +395,51 @@ knitr::kable(
 # - High Confidence: "Safe for algorithmic decisions"
 # - Moderate Confidence: "Use with caution - monitor outcomes"  
 # - Low Confidence: "Requires manual review or additional data"
-
+recommendations_data <- county_data %>%
+  select(NAME, median_incomeE, moe_pct_income, reliability) %>%
+  mutate(
+    recommendation = case_when(
+      reliability == "High Confidence" ~ "Safe for algorithmic decisions",
+      reliability == "Moderate Confidence" ~ "Use with caution - monitor outcomes",
+      reliability == "Low Confidence" ~ "Requires manual review or additional data",
+      TRUE ~ "Unclassified"
+    )
+  )
 # Format as a professional table with kable()
+knitr::kable(
+  recommendations_data,
+  digits = 1,
+  col.names = c("County", "Median Income", "MOE Percentage", "Reliability Category", "Algorithm Recommendation"),
+  caption = "Decision Framework for Algorithm Implementation by County"
+)
 ```
 
 **Key Recommendations:**
 
 **Your Task:** Use your analysis results to provide specific guidance to the department.
 
-1. **Counties suitable for immediate algorithmic implementation:** [List counties with high confidence data and explain why they're appropriate]
+1. **Counties suitable for immediate algorithmic implementation:** 
+[Counties:
+Adams, Allegheny, Armstrong, Beaver, Bedford, Berks, Blair, Bradford, Bucks, Butler, Cambria, Centre, Chester, Clarion, Clearfield, Clinton, Columbia, Crawford, Cumberland, Dauphin, Delaware, Erie, Fayette, Franklin, Fulton, Huntingdon, Indiana, Jefferson, Juniata, Lackawanna, Lancaster, Lawrence, Lebanon, Lehigh, Luzerne, Lycoming, McKean, Mercer, Mifflin, Monroe, Montgomery, Northampton, Northumberland, Perry, Philadelphia, Pike, Potter, Schuylkill, Somerset, Susquehanna, Tioga, Venango, Washington, Wayne, Westmoreland, Wyoming, York
+Their income MOE percentages are below 5%, which makes the data highly reliable and appropriate for immediate algorithmic use.]
 
-2. **Counties requiring additional oversight:** [List counties with moderate confidence data and describe what kind of monitoring would be needed]
+2. **Counties requiring additional oversight:** 
+[Counties:
+Cameron, Carbon, Elk, Forest, Greene, Montour, Snyder, Sullivan, Union, Warren
+Algorithms can be applied but require additional monitoring, such as:
+Regularly validating outputs against ground realities
+Tracking resource allocation to prevent bias amplification]
 
-3. **Counties needing alternative approaches:** [List counties with low confidence data and suggest specific alternatives - manual review, additional surveys, etc.]
+3. **Counties needing alternative approaches:** 
+[No counties are currently marked as Low Confidence, but if any exceed a 15% MOE threshold, algorithms should not be used directly. We can use:
+Manual review by analysts
+Supplemental surveys for more data
+Data aggregation of small tracts to reduce error]
 
 ## Questions for Further Investigation
 
-[List 2-3 questions that your analysis raised that you'd like to explore further in future assignments. Consider questions about spatial patterns, time trends, or other demographic factors.]
+[1.Do high-MOE communities show spatial clustering, such as being concentrated in rural areas?
+Beyond population size and racial composition, are economic factors (e.g., poverty rates, housing types) also systematically related to data quality?]
 
 # Technical Notes
 
@@ -418,15 +448,22 @@ knitr::kable(
 - Retrieved via tidycensus R package on [date]
 
 **Reproducibility:** 
-- All analysis conducted in R version [your version]
+- All analysis conducted in R version [R4.5.1]
 - Census API key required for replication
-- Complete code and documentation available at: [your portfolio URL]
+- Complete code and documentation available at: [https://musa-5080-fall-2025.github.io/portfolio-setup-LingxuanGao/labs/lab_1/assignment1_template.html]
 
 **Methodology Notes:**
-[Describe any decisions you made about data processing, county selection, or analytical choices that might affect reproducibility]
+[Data Source:
+The analysis used 'ACS 2022 5-year estimates' data, accessed via the tidycensus package.
+Data Processing:
+Variables were cleaned and renamed; MOE percentages were calculated as the reliability measure; GEOIDs were parsed into state, county, and tract codes.
+Geographic Scope:
+Pennsylvania was selected as the study area to align with class examples and allow direct comparison.
+Analytical Choices:
+A threshold of MOE > 15% was set to flag high error; both county- and tract-level data were used to compare reliability across spatial scales.]
 
 **Limitations:**
-[Note any limitations in your analysis - sample size issues, geographic scope, temporal factors, etc.]
+[ACS data are sample-based, and small-population communities (especially rural tracts) have large margins of error, making some results unstable.]
 
 ---
 
