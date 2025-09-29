@@ -2,7 +2,7 @@
 title: "Assignment 1: Census Data Quality for Policy Decisions"
 subtitle: "Evaluating Data Reliability for Algorithmic Decision-Making"
 author: "Lingxuan Gao"
-date: today
+date: September 28, 2025
 format: 
   html:
     code-fold: false
