@@ -187,9 +187,9 @@ knitr::kable(
 # Use filter() to select 2-3 counties from your county_reliability data
 # Store the selected counties in a variable called selected_counties
 selected_counties <- bind_rows(
-  county_data %>% filter(moe_pct_income < 5) %>% slice(1),     # High
-  county_data %>% filter(moe_pct_income >= 5 & moe_pct_income <= 10) %>% slice(1),  # Moderate
-  county_data %>% filter(moe_pct_income > 10) %>% slice(1)     # Low
+  county_data %>% filter(moe_pct_income < 5) %>% slice(1),    
+  county_data %>% filter(moe_pct_income >= 5 & moe_pct_income <= 10) %>% slice(1), 
+  county_data %>% filter(moe_pct_income > 10) %>% slice(1)     
 )
 
 # Display the selected counties with their key characteristics
@@ -253,8 +253,8 @@ library(stringr)
 
 tract_demo <- tract_demo %>%
   mutate(
-    county_code = str_extract(GEOID, "(?<=^..)..."),   # 前2位是州，后3位是县
-    tract_code  = str_extract(GEOID, "(?<=^.....).*")  # 从第6位开始都是tract
+    county_code = str_extract(GEOID, "(?<=^..)..."),   
+    tract_code  = str_extract(GEOID, "(?<=^.....).*")  
   )
 ```
 
