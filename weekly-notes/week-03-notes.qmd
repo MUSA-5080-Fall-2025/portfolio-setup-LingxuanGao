@@ -1,0 +1,54 @@
+---
+title: "week-03-notes"
+format: html
+---
+
+#Part 1: Why Visualization Matters
+
+##Why vis matters
+Summary statistics can hide critical patterns
+Outliers may represent important communities
+Relationships aren’t always linear
+Visual inspection reveals data quality issues
+
+##Common problems in government data presentation:
+Misleading scales or axes
+Cherry-picked time periods
+Hidden or ignored uncertainty
+Missing context about data reliability
+
+#Part 2: Grammar of Graphics
+
+##Grammar of Graphics principles:
+
+**Data → Aesthetics → Geometries → Visual**
+
+#Part 3: Exploratory Data Analysis
+
+##EDA Mindset
+What does the data look like? (distributions, missing values)
+What patterns exist? (relationships, clusters, trends)
+What’s unusual? (outliers, anomalies, data quality issues)
+What questions does this raise? (hypotheses for further investigation)
+How reliable is this data?
+**Understand your data before making decisions or building models**
+
+##EDA Workflow with Data Quality Focus
+**Load and inspect** - dimensions, variable types, missing data
+**Assess reliability** - examine margins of error, calculate coefficients of variation
+**Visualize distributions** - histograms, boxplots for each variable
+**Explore relationships** - scatter plots, correlations
+**Identify patterns** - grouping, clustering, geographical patterns
+**Question anomalies** - investigate outliers and unusual patterns
+**Document limitations** - prepare honest communication about data quality
+
+##EDA for Policy Analysis
+###Key questions for census data:
+Geographic patterns: Are problems concentrated in certain areas?
+Population relationships: How does size affect data quality?
+Demographic patterns: Are certain communities systematically different?
+Temporal trends: How do patterns change over time?
+Data integrity: Where might survey bias affect results?
+Reliability assessment: Which estimates should we trust?
+
+#Part 4: Data Joins & Integration
