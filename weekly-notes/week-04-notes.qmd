@@ -1,0 +1,29 @@
+---
+title: "week-04-notes"
+format: html
+---
+
+# Spatial Data & GIS Operations in R
+
+## Spatial Data Fundamentals
+
+### Vector Data Model
+
+Three basic types:
+
+Points → Locations (schools, hospitals, crime incidents)
+Lines → Linear features (roads, rivers, transit routes)
+Polygons → Areas (census tracts, neighborhoods, service areas)
+
+Each feature has:
+
+Geometry → Shape and location
+Attributes → Data about that feature (population, income, etc.)
+
+### sf Package
+**Spatial data is just data.frame + geometry column**
+
+
+
+
+
