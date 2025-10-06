@@ -15,7 +15,9 @@ website:
           - href: weekly-notes/week-02-notes.qmd
             text: "Weekly Notes 02: Algorithmic Decision Making & The Census"
           - href: weekly-notes/week-03-notes.qmd
-            text: "Weekly Notes 03: Data Visualization & Exploratory Analysis"  
+            text: "Weekly Notes 03: Data Visualization & Exploratory Analysis"
+          - href: weekly-notes/week-04-notes.qmd
+            text: "Weekly Notes 04: Spatial Data & GIS Operations in R" 
       - text: Labs
         menu:
           - href: labs/lab_0/lab0_template.qmd
