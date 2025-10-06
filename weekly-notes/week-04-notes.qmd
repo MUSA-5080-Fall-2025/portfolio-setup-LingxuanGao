@@ -5,7 +5,7 @@ format: html
 
 # Spatial Data & GIS Operations in R
 
-## Spatial Data Fundamentals
+## P1 Data Fundamentals
 
 ### Vector Data Model
 
@@ -23,7 +23,74 @@ Attributes → Data about that feature (population, income, etc.)
 ### sf Package
 **Spatial data is just data.frame + geometry column**
 
+**Common spatial data formats**:
 
+Shapefiles (.shp + supporting files)
+GeoJSON (.geojson)
+KML/KMZ (Google Earth)
+Database connections (PostGIS)
 
+## P2 Spatial Operations
+**Spatial Subsetting**:Extract features based on spatial relationships
 
+## P3 Geometry Operations
+
+### Buffer Operations
+Create zones around features
+
+## P4 Coordinate Reference Systems
+
+### Geographic vs. Projected Coordinates
+
+**Geographic Coordinate Systems (GCS)**:
+
+Latitude/longitude coordinates
+Units: decimal degrees
+Good for: Global datasets, web mapping
+Bad for: Area/distance calculations
+
+**Coordinate Systems (PCS)**:
+
+X/Y coordinates on a flat plane
+Units: meters, feet, etc.
+Good for: Local analysis, accurate measurements
+Bad for: Large areas, global datasets
+
+### Common Coordinate Reference Systems
+
+**WGS84 (EPSG:4326)**
+
+GPS standard, global coverage
+Geographic system (lat/lon)
+Good for web mapping, data sharing
+
+**Web Mercator (EPSG:3857)**
+
+Web mapping standard
+Projected system
+Heavily distorts areas near pole
+
+**State Plane / UTM zones**
+
+Local accuracy
+Different zones for different regions
+Optimized for specific geographic areas
+
+**Albers Equal Area**
+
+Preserves area
+Good for demographic/statistical analysis
+Widely used in national-scale thematic maps
+
+## Summary
+
+### Policy Analysis Workflow
+
+1.Load data → Get spatial boundaries and attribute data
+2.Check projections → Transform to appropriate CRS
+3.Join datasets → Combine spatial and non-spatial data
+4.Spatial operations → Buffers, intersections, distance calculations
+5.Aggregation → Summarize across spatial units
+6.Visualization → Maps and charts
+7.Interpretation → Policy recommendations
 
