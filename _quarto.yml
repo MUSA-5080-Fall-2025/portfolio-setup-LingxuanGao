@@ -18,6 +18,8 @@ website:
             text: "Weekly Notes 03: Data Visualization & Exploratory Analysis"
           - href: weekly-notes/week-04-notes.qmd
             text: "Weekly Notes 04: Spatial Data & GIS Operations in R" 
+          - href: weekly-notes/week-05-notes.qmd
+            text: "Weekly Notes 05: Introduction to Linear Regression"
       - text: Labs
         menu:
           - href: labs/lab_0/lab0_template.qmd
