@@ -3,3 +3,21 @@ title: "week-05-notes"
 format: html
 ---
 
+# Introduction to Linear Regression
+
+**Relationships & Predictions**
+
+## P1 The Statistical Learning Framework
+
+**Statistical learning = a set of approaches for estimating that relationship**
+
+### Parametric Approach: Linear Regression
+The assumption: Relationship between X and Y is linear
+
+Y≈β0+β1X1+β2X2+...+βpXp
+
+The task: Estimate the β coefficients using our sample data
+
+The method: Ordinary Least Squares (OLS)
+
+## P2 Two Different Goals
