@@ -21,3 +21,7 @@ The task: Estimate the β coefficients using our sample data
 The method: Ordinary Least Squares (OLS)
 
 ## P2 Two Different Goals
+
+**Prediction vs Inference**
+
+## P3 Building Model
