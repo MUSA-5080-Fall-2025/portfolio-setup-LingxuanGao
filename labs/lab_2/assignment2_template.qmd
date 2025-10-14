@@ -46,7 +46,7 @@ Load the required spatial data:
 - Pennsylvania census tracts
 
 **Your Task:**
-```{r Load data and standardize CRS}
+```{r Load data and standardize CRS, message=FALSE, warning=FALSE}
 # Load required packages
 library(sf)
 library(tidyverse)
@@ -87,7 +87,7 @@ Use `tidycensus` to download tract-level demographic data for Pennsylvania.
 - Population 65 years and over (you may need to sum multiple age categories)
 
 **Your Task:**
-```{r get demographic data}
+```{r get demographic data, message=FALSE, warning=FALSE}
 # Get demographic data from ACS
 acs_vars <- c(
   total_pop = "B01003_001",        
@@ -135,7 +135,7 @@ Identify census tracts with vulnerable populations based on TWO criteria:
 2. Significant elderly population (choose an appropriate threshold)
 
 **Your Task:**
-```{r Vulnerable Populations}
+```{r Vulnerable Populations, message=FALSE, warning=FALSE}
 # Filter for vulnerable tracts based on your criteria
 # Define vulnerability thresholds
 income_threshold <- quantile(pa_acs_sf$median_incomeE, 0.2, na.rm = TRUE)
@@ -181,7 +181,7 @@ cat("Percentage of all PA tracts:", round(pct_vulnerable, 2), "%\n")
 For each vulnerable tract, calculate the distance to the nearest hospital.
 
 **Your Task:**
-```{r Calculate Distance to Hospitals}
+```{r Calculate Distance to Hospitals, message=FALSE, warning=FALSE}
 # Transform to appropriate projected CRS
 vulnerable_tracts_proj <- st_transform(vulnerable_tracts, 5070)
 hospitals_proj <- st_transform(hospitals, 5070)
@@ -228,7 +228,7 @@ cat("Number of vulnerable tracts >15 miles from hospital:", over_15mi, "\n")
 Define "underserved" as vulnerable tracts that are more than 15 miles from the nearest hospital.
 
 **Your Task:**
-```{r Identify Underserved Areas}
+```{r Identify Underserved Areas, message=FALSE, warning=FALSE}
 # Create underserved variable
 vulnerable_tracts_proj <- vulnerable_tracts_proj %>%
   mutate(
@@ -259,7 +259,7 @@ cat("Percentage of vulnerable tracts that are underserved:", round(pct_underserv
 Use spatial joins and aggregation to calculate county-level statistics about vulnerable populations and hospital access.
 
 **Your Task:**
-```{r Aggregate to County Level}
+```{r Aggregate to County Level, message=FALSE, warning=FALSE}
 # Spatial join tracts to counties
 library(dplyr)
 pa_counties <- st_transform(pa_counties, 5070)
@@ -314,7 +314,7 @@ top_vulnerable_pop <- vul_with_county %>%
 Create a professional table showing the top 10 priority counties for healthcare investment.
 
 **Your Task:**
-```{r Create Summary Table}
+```{r Create Summary Table, message=FALSE, warning=FALSE}
 # Create and format priority counties table
 library(knitr)
 library(scales)
@@ -366,7 +366,7 @@ Using the skills from Week 3 (Data Visualization), create publication-quality ma
 Create a choropleth map showing healthcare access challenges at the county level.
 
 **Your Task:**
-```{r County-Level Choropleth}
+```{r County-Level Choropleth, message=FALSE, warning=FALSE}
 # Create county-level access map
 # Merge geometry back to county summary
 pa_counties_5070 <- st_transform(pa_counties, 5070)
@@ -417,7 +417,7 @@ ggplot() +
 Create a map highlighting underserved vulnerable tracts.
 
 **Your Task:**
-```{r Detailed Vulnerability Map}
+```{r Detailed Vulnerability Map, message=FALSE, warning=FALSE}
 # Create detailed tract-level map
 ggplot() +
   geom_sf(data = pa_counties_5070, fill = "gray98", color = "gray80", size = 0.2) +
@@ -463,7 +463,7 @@ ggplot() +
 Create a visualization showing the distribution of distances to hospitals for vulnerable populations.
 
 **Your Task:**
-```{r}
+```{r, message=FALSE, warning=FALSE}
 # Create distribution visualization
 ggplot(vulnerable_tracts_proj, aes(x = dist_to_hospital_mi)) +
   geom_histogram(
@@ -620,7 +620,7 @@ Choose ONE of the following challenge exercises, or propose your own research qu
    - Check and standardize the CRS
    - Provide basic summary statistics
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 # Load your additional dataset
 schools <- st_read("./data/Schools.geojson")
 crimes  <- st_read("./data/incidents_part1_part2/incidents_part1_part2.shp")
@@ -669,7 +669,7 @@ Use at least TWO spatial operations to answer your research question.
 - Point-in-polygon aggregation
 
 **Your Task:**
-```{r}
+```{r, message=FALSE, warning=FALSE}
 # Your spatial analysis
 
 schools_2272 <- schools_2272 %>%
@@ -707,7 +707,7 @@ kable(
 )
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 # Filter: only high-risk schools without nearby bike lanes
 highrisk_nobike <- safety_summary %>%
   filter(risk_level == "High Risk" & has_bike_lane == FALSE)
