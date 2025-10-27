@@ -20,6 +20,7 @@ website:
             text: "Weekly Notes 04: Spatial Data & GIS Operations in R" 
           - href: weekly-notes/week-05-notes.qmd
             text: "Weekly Notes 05: Introduction to Linear Regression"
+      
       - text: Labs
         menu:
           - href: labs/lab_0/lab0_template.qmd
@@ -28,11 +29,12 @@ website:
             text: "Lab 1: Census Data Quality for Policy Decisions"
           - href: labs/lab_2/Lingxuan_Gao_assignment2_template.qmd          
             text: "Lab 2: Spatial Analysis and Visualization-Healthcare Access and Equity in Pennsylvania"
-      - text: Midterm Challenge
-        menu: 
-          - href: "Midterm/Yang_Chen_Fang_Gao_Xiang_Zhao_Appendix.qmd"         
-            text: "Appendix" 
-          - href: "Midterm/Yang_Chen_Fang_Gao_Xiang_Zhao_Presentation.qmd"         
+      
+      - text: Midterm
+        menu:
+          - href: "Midterm/Yang_Chen_Fang_Gao_Xiang_Zhao_Appendix.qmd"
+            text: "Appendix"
+          - href: "Midterm/Yang_Chen_Fang_Gao_Xiang_Zhao_Presentation.qmd"
             text: "Presentation"
             
 format:
