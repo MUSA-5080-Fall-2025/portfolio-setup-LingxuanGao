@@ -56,6 +56,10 @@ library(scales)
 library(patchwork)
 library(here)
 
+# Add this near the top of your .qmd after loading libraries
+options(tigris_use_cache = TRUE)
+options(tigris_progress = FALSE)  # Suppress tigris progress bars
+
 # Load spatial data
 pa_counties <- st_read("./data/Pennsylvania_County_Boundaries.shp")
 districts <- st_read("data/districts.geojson")
@@ -764,7 +768,7 @@ ggplot() +
 
 **Your interpretation:**
 
-[The map shows that high-risk schools without nearby bike lanes are scattered across Philadelphia County, with notable clusters in Central Philadelphia and the southern parts of North Philadelphia. A smaller number of red points also appear in West Philadelphia and South Philadelphia, indicating that safety and bike infrastructure gaps are not limited to any single district. Overall, most schools with higher crime counts are located along major urban corridors, where dense street networks and limited bike lanes may increase exposure to unsafe environments.]
+The map shows that high-risk schools without nearby bike lanes are scattered across Philadelphia County, with notable clusters in Central Philadelphia and the southern parts of North Philadelphia. A smaller number of red points also appear in West Philadelphia and South Philadelphia, indicating that safety and bike infrastructure gaps are not limited to any single district. Overall, most schools with higher crime counts are located along major urban corridors, where dense street networks and limited bike lanes may increase exposure to unsafe environments.
 
 
 ## Finally - A few comments about your incorporation of feedback!
