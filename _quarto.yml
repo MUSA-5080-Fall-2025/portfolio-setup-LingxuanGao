@@ -32,6 +32,12 @@ website:
             text: "Midterm: Appendix" 
           - href: labs/Midterm/Yang_Chen_Fang_Gao_Xiang_Zhao_Presentation.qmd          
             text: "Midterm: Presentation" 
+      - text: Midterm Challenge
+        menu: 
+          - href: labs/Midterm/Yang_Chen_Fang_Gao_Xiang_Zhao_Appendix.qmd          
+            text: "Appendix" 
+          - href: labs/Midterm/Yang_Chen_Fang_Gao_Xiang_Zhao_Presentation.qmd          
+            text: "Presentation"
 format:
   html:
     theme: cosmo
