@@ -2944,7 +2944,3 @@ cat("  • Spatial: Deepest Blue (#053061)\n")
 cat("  • Location FE: Reddish Tone (#D6604D)\n\n")
 
 ```
-
-```{r}
-
-```
