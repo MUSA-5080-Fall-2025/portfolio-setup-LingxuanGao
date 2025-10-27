@@ -30,15 +30,17 @@ website:
             text: "Lab 2: Spatial Analysis and Visualization-Healthcare Access and Equity in Pennsylvania"
       - text: Midterm Challenge
         menu: 
-          - href: labs/Midterm/Yang_Chen_Fang_Gao_Xiang_Zhao_Appendix.qmd          
+          - href: Midterm/Yang_Chen_Fang_Gao_Xiang_Zhao_Appendix.qmd          
             text: "Appendix" 
-          - href: labs/Midterm/Yang_Chen_Fang_Gao_Xiang_Zhao_Presentation.qmd          
+          - href: Midterm/Yang_Chen_Fang_Gao_Xiang_Zhao_Presentation.qmd          
             text: "Presentation"
 format:
   html:
     theme: cosmo
     toc: true
     code-fold: true
+    css: styles.css
+    page-layout: full
 
 execute:
   freeze: auto
