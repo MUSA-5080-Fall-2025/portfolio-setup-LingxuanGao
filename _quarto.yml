@@ -29,7 +29,8 @@ website:
             text: "Lab 1: Census Data Quality for Policy Decisions"
           - href: labs/lab_2/Lingxuan_Gao_assignment2_template.qmd          
             text: "Lab 2: Spatial Analysis and Visualization-Healthcare Access and Equity in Pennsylvania"
-      
+          - href: labs/lab_4/Lingxuan_Gao_assignment4.qmd          
+            text: "Lab 4: Spatial Predictive Analysis"
       - text: Midterm
         menu:
           - href: "Midterm/Yang_Chen_Fang_Gao_Xiang_Zhao_Appendix.qmd"
