@@ -1,0 +1,119 @@
+---
+title: "week-11-notes: Space-Time Prediction"
+subtitle: "Bike Share Demand Forecasting with Panel Data & Temporal Lags"
+format: html
+---
+## 1 The Space-Time Challenge
+
+**Goal**: Build a system that predicts demand in space and time
+
+- Panel data: Same stations observed over time
+- Temporal features: What happened last hour?
+- Space-time interaction: Different patterns by location and time
+
+## 2 Panel Data
+
+**Definition:** Data that follows the same units over multiple time periods
+
+## 3 Binning Data into Time Intervals
+
+## 4 Temporal Lags
+
+**Core idea**: Past demand predicts future demand
+
+- **lag1Hour:** Short-term persistence (smooth demand changes)
+- **lag3Hours:** Medium-term trends (morning rush building)
+- **lag12Hours:** Half-day cycle (AM vs. PM patterns)
+- **lag1day (24 hours):** Daily periodicity (same time yesterday)
+
+## 5 Creating the Space-Time Panel
+
+The Challenge: Missing Observations
+Lag calculations break if rows are missing
+
+### Creating a Complete Panel
+
+Calculate all possible combinations
+- Create every possible station-hour combination
+- Join to actual trip counts
+- Fill missing with 0
+
+Joining Station Attributes
+- Station location, demographics from census
+- Join to panel
+
+Adding Time-Varying Features
+- Weather changes hourly
+- Create time features
+
+### Final Panel Structure
+
+- Every station-hour combination exists
+- Trip counts (including zeros)
+- Station fixed attributes (location, demographics)
+- Time-varying features (weather, day of week, hour)
+- Temporal lags (lag1Hour, lag1day, etc.)
+
+## 6 Temporal Validation
+
+### The Temporal Validation Problem
+
+**You CANNOT train on the future to predict the past!**
+
+## 7 Building Models
+
+### Model Progression Strategy
+
+**We'll build 5 models, adding complexity:**
+
+1. **Baseline:** Time + Weather only
+2. **+ Temporal lags:** Add lag1Hour, lag1day
+3. **+ Spatial features:** Add demographics, location
+4. **+ Station fixed effects:** Control for station-specific baselines
+5. **+ Holiday effects:** Account for Memorial Day weekend
+
+Goal: See which features improve prediction accuracy
+
+Evaluating Models: MAE
+
+## 8 Space-Time Error Analysis
+
+- High MAE at high-volume stations might be acceptable
+- High MAE at low-volume stations might indicate systematic bias
+- Spatial patterns in errors suggest missing features
+- Temporal patterns suggest missing time dynamics
+
+## 9 Policy Implications
+
+### Interpreting Results for Operations
+
+**For a bike rebalancing system:**
+
+1. **Prediction accuracy matters most at high-volume stations**
+   - Running out of bikes downtown causes more complaints
+   - But: Is this equitable?
+
+2. **Temporal patterns reveal operational windows**
+   - Rebalance during overnight hours (low demand)
+   - Pre-position bikes before AM rush
+
+3. **Spatial patterns suggest infrastructure gaps**
+   - Persistent errors in certain neighborhoods
+   - Maybe add more stations? Increase capacity?
+   
+### Next Steps to Improve
+
+1. **More temporal features:**
+   - Precipitation *forecast* (not just current)
+   - Event calendars (concerts, sports games)
+   - School schedules
+
+2. **More spatial features:**
+   - Points of interest (offices, restaurants, parks)
+   - Transit service frequency
+   - Bike lane connectivity
+
+3. **Better model specification:**
+   - Interactions (e.g., `weekend * hour`)
+   - Non-linear effects (splines for time of day)
+   - Different models for different station types

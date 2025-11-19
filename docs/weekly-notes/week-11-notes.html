@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-09-08">
 
-<title>Week 1 Notes - Course Introduction – Lingxuan Gao - MUSA 5080 Portfolio</title>
+<title>week-11-notes: Space-Time Prediction – Lingxuan Gao - MUSA 5080 Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -182,11 +181,29 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#key-concepts-learned" id="toc-key-concepts-learned" class="nav-link active" data-scroll-target="#key-concepts-learned">Key Concepts Learned</a></li>
-  <li><a href="#coding-techniques" id="toc-coding-techniques" class="nav-link" data-scroll-target="#coding-techniques">Coding Techniques</a></li>
-  <li><a href="#questions-challenges" id="toc-questions-challenges" class="nav-link" data-scroll-target="#questions-challenges">Questions &amp; Challenges</a></li>
-  <li><a href="#connections-to-policy" id="toc-connections-to-policy" class="nav-link" data-scroll-target="#connections-to-policy">Connections to Policy</a></li>
-  <li><a href="#reflection" id="toc-reflection" class="nav-link" data-scroll-target="#reflection">Reflection</a></li>
+  <li><a href="#the-space-time-challenge" id="toc-the-space-time-challenge" class="nav-link active" data-scroll-target="#the-space-time-challenge">1 The Space-Time Challenge</a></li>
+  <li><a href="#panel-data" id="toc-panel-data" class="nav-link" data-scroll-target="#panel-data">2 Panel Data</a></li>
+  <li><a href="#binning-data-into-time-intervals" id="toc-binning-data-into-time-intervals" class="nav-link" data-scroll-target="#binning-data-into-time-intervals">3 Binning Data into Time Intervals</a></li>
+  <li><a href="#temporal-lags" id="toc-temporal-lags" class="nav-link" data-scroll-target="#temporal-lags">4 Temporal Lags</a></li>
+  <li><a href="#creating-the-space-time-panel" id="toc-creating-the-space-time-panel" class="nav-link" data-scroll-target="#creating-the-space-time-panel">5 Creating the Space-Time Panel</a>
+  <ul class="collapse">
+  <li><a href="#creating-a-complete-panel" id="toc-creating-a-complete-panel" class="nav-link" data-scroll-target="#creating-a-complete-panel">Creating a Complete Panel</a></li>
+  <li><a href="#final-panel-structure" id="toc-final-panel-structure" class="nav-link" data-scroll-target="#final-panel-structure">Final Panel Structure</a></li>
+  </ul></li>
+  <li><a href="#temporal-validation" id="toc-temporal-validation" class="nav-link" data-scroll-target="#temporal-validation">6 Temporal Validation</a>
+  <ul class="collapse">
+  <li><a href="#the-temporal-validation-problem" id="toc-the-temporal-validation-problem" class="nav-link" data-scroll-target="#the-temporal-validation-problem">The Temporal Validation Problem</a></li>
+  </ul></li>
+  <li><a href="#building-models" id="toc-building-models" class="nav-link" data-scroll-target="#building-models">7 Building Models</a>
+  <ul class="collapse">
+  <li><a href="#model-progression-strategy" id="toc-model-progression-strategy" class="nav-link" data-scroll-target="#model-progression-strategy">Model Progression Strategy</a></li>
+  </ul></li>
+  <li><a href="#space-time-error-analysis" id="toc-space-time-error-analysis" class="nav-link" data-scroll-target="#space-time-error-analysis">8 Space-Time Error Analysis</a></li>
+  <li><a href="#policy-implications" id="toc-policy-implications" class="nav-link" data-scroll-target="#policy-implications">9 Policy Implications</a>
+  <ul class="collapse">
+  <li><a href="#interpreting-results-for-operations" id="toc-interpreting-results-for-operations" class="nav-link" data-scroll-target="#interpreting-results-for-operations">Interpreting Results for Operations</a></li>
+  <li><a href="#next-steps-to-improve" id="toc-next-steps-to-improve" class="nav-link" data-scroll-target="#next-steps-to-improve">Next Steps to Improve</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -195,7 +212,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Week 1 Notes - Course Introduction</h1>
+<h1 class="title">week-11-notes: Space-Time Prediction</h1>
+<p class="subtitle lead">Bike Share Demand Forecasting with Panel Data &amp; Temporal Lags</p>
 </div>
 
 
@@ -203,12 +221,6 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta column-page-left">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">September 8, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -218,42 +230,132 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="key-concepts-learned" class="level2">
-<h2 class="anchored" data-anchor-id="key-concepts-learned">Key Concepts Learned</h2>
+<section id="the-space-time-challenge" class="level2">
+<h2 class="anchored" data-anchor-id="the-space-time-challenge">1 The Space-Time Challenge</h2>
+<p><strong>Goal</strong>: Build a system that predicts demand in space and time</p>
 <ul>
-<li>[List main concepts from lecture] 1.1 Github: repo;commit;push;pull</li>
-</ul>
-<p>1.2 Github workflow: edit files in rstudio-&gt;commit changes-&gt;push to github</p>
-<p>2.1 quarto - [Technical skills covered]</p>
-</section>
-<section id="coding-techniques" class="level2">
-<h2 class="anchored" data-anchor-id="coding-techniques">Coding Techniques</h2>
-<ul>
-<li>[New R functions or approaches] dplyr: -Data Manipulation Pipeline</li>
-<li>[Quarto features learned] YAML header R code chunk</li>
+<li>Panel data: Same stations observed over time</li>
+<li>Temporal features: What happened last hour?</li>
+<li>Space-time interaction: Different patterns by location and time</li>
 </ul>
 </section>
-<section id="questions-challenges" class="level2">
-<h2 class="anchored" data-anchor-id="questions-challenges">Questions &amp; Challenges</h2>
+<section id="panel-data" class="level2">
+<h2 class="anchored" data-anchor-id="panel-data">2 Panel Data</h2>
+<p><strong>Definition:</strong> Data that follows the same units over multiple time periods</p>
+</section>
+<section id="binning-data-into-time-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="binning-data-into-time-intervals">3 Binning Data into Time Intervals</h2>
+</section>
+<section id="temporal-lags" class="level2">
+<h2 class="anchored" data-anchor-id="temporal-lags">4 Temporal Lags</h2>
+<p><strong>Core idea</strong>: Past demand predicts future demand</p>
 <ul>
-<li>[What I didn’t fully understand]</li>
-<li>[Areas needing more practice]</li>
+<li><strong>lag1Hour:</strong> Short-term persistence (smooth demand changes)</li>
+<li><strong>lag3Hours:</strong> Medium-term trends (morning rush building)</li>
+<li><strong>lag12Hours:</strong> Half-day cycle (AM vs.&nbsp;PM patterns)</li>
+<li><strong>lag1day (24 hours):</strong> Daily periodicity (same time yesterday)</li>
 </ul>
 </section>
-<section id="connections-to-policy" class="level2">
-<h2 class="anchored" data-anchor-id="connections-to-policy">Connections to Policy</h2>
+<section id="creating-the-space-time-panel" class="level2">
+<h2 class="anchored" data-anchor-id="creating-the-space-time-panel">5 Creating the Space-Time Panel</h2>
+<p>The Challenge: Missing Observations Lag calculations break if rows are missing</p>
+<section id="creating-a-complete-panel" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-complete-panel">Creating a Complete Panel</h3>
+<p>Calculate all possible combinations - Create every possible station-hour combination - Join to actual trip counts - Fill missing with 0</p>
+<p>Joining Station Attributes - Station location, demographics from census - Join to panel</p>
+<p>Adding Time-Varying Features - Weather changes hourly - Create time features</p>
+</section>
+<section id="final-panel-structure" class="level3">
+<h3 class="anchored" data-anchor-id="final-panel-structure">Final Panel Structure</h3>
 <ul>
-<li>[How this week’s content applies to real policy work]</li>
+<li>Every station-hour combination exists</li>
+<li>Trip counts (including zeros)</li>
+<li>Station fixed attributes (location, demographics)</li>
+<li>Time-varying features (weather, day of week, hour)</li>
+<li>Temporal lags (lag1Hour, lag1day, etc.)</li>
 </ul>
 </section>
-<section id="reflection" class="level2">
-<h2 class="anchored" data-anchor-id="reflection">Reflection</h2>
+</section>
+<section id="temporal-validation" class="level2">
+<h2 class="anchored" data-anchor-id="temporal-validation">6 Temporal Validation</h2>
+<section id="the-temporal-validation-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-temporal-validation-problem">The Temporal Validation Problem</h3>
+<p><strong>You CANNOT train on the future to predict the past!</strong></p>
+</section>
+</section>
+<section id="building-models" class="level2">
+<h2 class="anchored" data-anchor-id="building-models">7 Building Models</h2>
+<section id="model-progression-strategy" class="level3">
+<h3 class="anchored" data-anchor-id="model-progression-strategy">Model Progression Strategy</h3>
+<p><strong>We’ll build 5 models, adding complexity:</strong></p>
+<ol type="1">
+<li><strong>Baseline:</strong> Time + Weather only</li>
+<li><strong>+ Temporal lags:</strong> Add lag1Hour, lag1day</li>
+<li><strong>+ Spatial features:</strong> Add demographics, location</li>
+<li><strong>+ Station fixed effects:</strong> Control for station-specific baselines</li>
+<li><strong>+ Holiday effects:</strong> Account for Memorial Day weekend</li>
+</ol>
+<p>Goal: See which features improve prediction accuracy</p>
+<p>Evaluating Models: MAE</p>
+</section>
+</section>
+<section id="space-time-error-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="space-time-error-analysis">8 Space-Time Error Analysis</h2>
 <ul>
-<li>[What was most interesting]</li>
-<li>[How I’ll apply this knowledge]</li>
+<li>High MAE at high-volume stations might be acceptable</li>
+<li>High MAE at low-volume stations might indicate systematic bias</li>
+<li>Spatial patterns in errors suggest missing features</li>
+<li>Temporal patterns suggest missing time dynamics</li>
 </ul>
+</section>
+<section id="policy-implications" class="level2">
+<h2 class="anchored" data-anchor-id="policy-implications">9 Policy Implications</h2>
+<section id="interpreting-results-for-operations" class="level3">
+<h3 class="anchored" data-anchor-id="interpreting-results-for-operations">Interpreting Results for Operations</h3>
+<p><strong>For a bike rebalancing system:</strong></p>
+<ol type="1">
+<li><strong>Prediction accuracy matters most at high-volume stations</strong>
+<ul>
+<li>Running out of bikes downtown causes more complaints</li>
+<li>But: Is this equitable?</li>
+</ul></li>
+<li><strong>Temporal patterns reveal operational windows</strong>
+<ul>
+<li>Rebalance during overnight hours (low demand)</li>
+<li>Pre-position bikes before AM rush</li>
+</ul></li>
+<li><strong>Spatial patterns suggest infrastructure gaps</strong>
+<ul>
+<li>Persistent errors in certain neighborhoods</li>
+<li>Maybe add more stations? Increase capacity?</li>
+</ul></li>
+</ol>
+</section>
+<section id="next-steps-to-improve" class="level3">
+<h3 class="anchored" data-anchor-id="next-steps-to-improve">Next Steps to Improve</h3>
+<ol type="1">
+<li><strong>More temporal features:</strong>
+<ul>
+<li>Precipitation <em>forecast</em> (not just current)</li>
+<li>Event calendars (concerts, sports games)</li>
+<li>School schedules</li>
+</ul></li>
+<li><strong>More spatial features:</strong>
+<ul>
+<li>Points of interest (offices, restaurants, parks)</li>
+<li>Transit service frequency</li>
+<li>Bike lane connectivity</li>
+</ul></li>
+<li><strong>Better model specification:</strong>
+<ul>
+<li>Interactions (e.g., <code>weekend * hour</code>)</li>
+<li>Non-linear effects (splines for time of day)</li>
+<li>Different models for different station types</li>
+</ul></li>
+</ol>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -20,6 +20,8 @@ website:
             text: "Weekly Notes 04: Spatial Data & GIS Operations in R" 
           - href: weekly-notes/week-05-notes.qmd
             text: "Weekly Notes 05: Introduction to Linear Regression"
+          - href: weekly-notes/week-11-notes.qmd
+            text: "Weekly Notes 11: Space-Time Prediction"
       
       - text: Labs
         menu:
