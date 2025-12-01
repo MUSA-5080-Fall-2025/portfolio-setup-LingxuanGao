@@ -716,20 +716,20 @@ summary(model2)
 
 ## Model 3: Add Demographics
 
-This model captures neighborhood effects on demand
+This model captures neighborhood effects on demand.
 
 ```{r model3}
 model3 <- lm(
   Trip_Count ~ as.factor(hour) + dotw_simple + Temperature + Precipitation +
     lag1Hour + lag3Hours + lag1day +
-    Med_Inc.x + Percent_Taking_Transit.y + Percent_White.y,
+    Med_Inc.y + Percent_Taking_Transit.y + Percent_White.y,
   data = train
 )
 
 summary(model3)
 ```
 
-**Interpretation**: The model still captures the familiar hourly and day-of-week ridership cycles, and the lagged demand variables remain the strongest predictors—recent activity at a station continues to be the best signal of current demand. When socioeconomic context is added, several neighborhood characteristics show meaningful effects: stations in higher-income areas tend to have slightly higher trip counts, stations in areas with more transit commuters have lower counts, and stations in whiter neighborhoods see somewhat higher usage. These effects are statistically significant but small compared to the lagged demand terms. Model fit declines from the previous version because many rows are dropped when socioeconomic data are missing, but the added variables help reveal how local demographics shape the background level of demand.
+**Interpretation**: The R square means the model explains about 34% of hourly variation in bike demand.Adding demographics raises R² slightly compared to Model 2, they help, but only modestly.Temporal lags dominate the model, while demographics show systematic spatial patterns. All three demographic variables are all significant, and it shows that demographics matter, but compared to temporal lags and hour-of-day, their effect sizes are small.
 
 ## Model 4: Add Station Fixed Effects
 
@@ -737,7 +737,7 @@ summary(model3)
 model4 <- lm(
   Trip_Count ~ as.factor(hour) + dotw_simple + Temperature + Precipitation +
     lag1Hour + lag3Hours + lag1day +
-    Med_Inc.x + Percent_Taking_Transit.y + Percent_White.y +
+    Med_Inc.y + Percent_Taking_Transit.y + Percent_White.y +
     as.factor(start_station),
   data = train
 )
@@ -747,15 +747,15 @@ cat("Model 4 R-squared:", summary(model4)$r.squared, "\n")
 cat("Model 4 Adj R-squared:", summary(model4)$adj.r.squared, "\n")
 ```
 
-**Interpretation**: Model 4 adds a dummy variable for every station, letting the model control for unobserved station-specific factors. By accounting for these constant differences across stations, the model improves slightly, reaching an R-squared of about 0.25. This means that after considering time patterns, weather, temporal lags, demographics, and fixed station baselines, the model explains roughly one-quarter of the variability in hourly trip counts. The adjusted R-squared stays almost the same, indicating the fixed effects are useful rather than just adding noise. This version captures more of the structural differences between stations but still leaves much of the short-term fluctuation unexplained.
-
+**Interpretation**: Model 4 adds a dummy variable for every station, letting the model control for unobserved station-specific factors. It shows that station-specific factors are strong drivers of bike-share demand. Adding fixed effects significantly boosts the model’s ability to explain past variation, but the improvement does not reliably boost predictive accuracy. Even though R² increases, the model’s MAE does not improve much. Because station fixed effects are great for explaining historical data, but they don’t generalize as well when predicting new periods.
+ 
 ## Model 5: Add Rush Hour Interaction
 
 ```{r model5}
 model5 <- lm(
   Trip_Count ~ as.factor(hour) + dotw_simple + Temperature + Precipitation +
     lag1Hour + lag3Hours + lag1day + rush_hour + as.factor(month) +
-    Med_Inc.x + Percent_Taking_Transit.y + Percent_White.y +
+    Med_Inc.y + Percent_Taking_Transit.y + Percent_White.y +
     as.factor(start_station) +
     rush_hour * weekend,  # Rush hour effects different on weekends
   data = train
@@ -765,7 +765,8 @@ cat("Model 5 R-squared:", summary(model5)$r.squared, "\n")
 cat("Model 5 Adj R-squared:", summary(model5)$adj.r.squared, "\n")
 ```
 
-**Interpretation**: Model 5 introduces an interaction between rush hour and weekends, allowing the model to differentiate the strong weekday commuting peaks from the much softer weekend patterns. It also adds month effects to capture seasonal shifts across July, August, and September. With these additions, the model’s explanatory power rises slightly to about 25%. The small increase in R-squared shows that rush-hour behavior really does differ between weekdays and weekends, but most of the model’s strength still comes from temporal lags and station fixed effects.
+**Interpretation**: Model 5 introduces an interaction between rush hour and weekends, allowing the model to differentiate the strong weekday commuting peaks from the much softer weekend patterns. It also adds month effects to capture seasonal shifts across July, August, and September. Even though Model 5 has the highest R², it performs worse on the test set. This indicates that Model 5 is overfit: it explains historical variation better but loses forecasting accuracy.
+Model 4 remains the best balance of simplicity and predictive accuracy,
 
 ------------------------------------------------------------------------
 
@@ -817,7 +818,22 @@ kable(mae_results,
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
-**Interpretation**: Adding temporal lags provides the biggest improvement. The baseline time-and-weather model misses by about 0.83 trips per hour on average. Once recent past demand is introduced, error drops to 0.69 — easily the best performance across all models. Adding demographics, station fixed effects, or a weekend rush-hour interaction doesn’t help; in fact, these additions slightly increase the error. This happens because the more complex models risk overfitting the training data, so they generalize less well to new weeks. The results suggest that short-term demand history is the strongest predictor, and that simpler models outperform more complicated ones when forecasting future ridership.
+**Interpretation**: 
+1. Temporal lags are the most important predictive feature.
+
+Model 2 gives the biggest drop in MAE, showing that short-term demand patterns drive accuracy.
+
+2. Demographics help explain variation but don’t improve prediction.
+
+3. Station fixed effects give a small but meaningful improvement.
+
+They adjust for inherent differences between stations.
+
+4. Extra complexity (Model 5) does not yield better predictions.
+
+The model is already near its predictive ceiling.
+
+5. Best predictive models are Model 2 (simplest) and Model 4 (slightly better).
 
 ## Visualize Model Comparison
 
@@ -837,6 +853,8 @@ ggplot(mae_results, aes(x = reorder(Model, -MAE), y = MAE)) +
 
 # Part10: Compare results to Q1 2025:
 
+![](image/q1.png){width="100%"}
+
 ## 1. How do the MAE values compare across quarters?
 
 Q1 2025 MAE values are generally lower than those we reported for Q3 2024.
@@ -845,26 +863,19 @@ So predictions in Q1 are simply easier.
 
 ## 2. Why might they differ?
 
-Winter(Q1) has smoother, more predictable demand:
-Riders may behave more consistently in colder months.
-There are fewer tourists.
-Weather is cold but stable—more consistently low temperatures, fewer big swings.
+Winter(Q1) has smoother, more predictable demand: Riders may behave more consistently in colder months. There are fewer tourists. Weather is cold but stable—more consistently low temperatures, fewer big swings.
 
-Summer(Q3) is noisy and harder to predict:
-Weather-driven volatility: heat waves, thunderstorms, humidity.
-More variation in leisure rides, weekend trips, and irregular patterns.
-Tourism and events add bursts of unpredictable activity.
+Summer(Q3) is noisy and harder to predict: Weather-driven volatility: heat waves, thunderstorms, humidity. More variation in leisure rides, weekend trips, and irregular patterns. Tourism and events add bursts of unpredictable activity.
 
 So the model in Q3 faces more randomness, and MAE naturally rises.
 
 ## 3. Are temporal patterns different (summer vs. winter)?
 
-Yes.
-In winter, ridership follows a tighter, more predictable rhythm. The daily totals rise gradually from January into March without the big, volatile spikes that appear in summer. Hourly patterns also become cleaner: weekday mornings and evenings show sharp commuter peaks, while weekends stay much flatter with only a modest mid-day bump. By contrast, summer brings stronger mid-day activity, higher weekend volume, and much more weather-driven noise. Winter demand is steadier and more commute-oriented, whereas summer mixes commuting with a large amount of leisure riding, creating far more variation.
+Yes. In winter, ridership follows a tighter, more predictable rhythm. The daily totals rise gradually from January into March without the big, volatile spikes that appear in summer. Hourly patterns also become cleaner: weekday mornings and evenings show sharp commuter peaks, while weekends stay much flatter with only a modest mid-day bump. By contrast, summer brings stronger mid-day activity, higher weekend volume, and much more weather-driven noise. Winter demand is steadier and more commute-oriented, whereas summer mixes commuting with a large amount of leisure riding, creating far more variation.
 
 ## 4. Which features are most important in your quarter?
-Temporal lags.
-The results show a large performance jump when lag variables (1 hour, 3 hours, 1 day) are added. Summer ridership changes quickly with events, weather shifts, and bursts of leisure activity.
+
+Temporal lags. The results show a large performance jump when lag variables (1 hour, 3 hours, 1 day) are added. Summer ridership changes quickly with events, weather shifts, and bursts of leisure activity.
 
 # Part 11: Error Analysis
 
@@ -872,12 +883,12 @@ The results show a large performance jump when lag variables (1 hour, 3 hours, 1
 
 Observed vs. Predicted
 
-Let's use our best model (Model 2) for error analysis.
+Let's use our best model (Model 4) for error analysis.
 
 ```{r obs_vs_pred}
 test <- test %>%
   mutate(
-    error = Trip_Count - pred2,
+    error = Trip_Count - pred4,
     abs_error = abs(error),
     time_of_day = case_when(
       hour < 7 ~ "Overnight",
@@ -889,7 +900,7 @@ test <- test %>%
   )
 
 # Scatter plot by time and day type
-ggplot(test, aes(x = Trip_Count, y = pred2)) +
+ggplot(test, aes(x = Trip_Count, y = pred4)) +
   geom_point(alpha = 0.2, color = "#3182bd") +
   geom_abline(slope = 1, intercept = 0, color = "red", linewidth = 1) +
   geom_smooth(method = "lm", se = FALSE, color = "darkgreen") +
@@ -904,12 +915,9 @@ ggplot(test, aes(x = Trip_Count, y = pred2)) +
   plotTheme
 ```
 
-**Interpretation**:
-Where the model performs well:
-It does best in low-to-moderate demand conditions, especially overnight and during mid-day. Those periods have fewer big swings and smaller trip counts, so the model can track the pattern closely. On weekends—when demand is generally smoother—the points cluster tightly and the green line stays close to the red line. The model doesn’t dramatically over- or under-shoot in these calmer periods.
+**Interpretation**: Where the model performs well: It does best in low-to-moderate demand conditions, especially overnight and during mid-day. Those periods have fewer big swings and smaller trip counts, so the model can track the pattern closely. On weekends—when demand is generally smoother—the points cluster tightly and the green line stays close to the red line. The model doesn’t dramatically over- or under-shoot in these calmer periods.
 
-Where the model struggles:
-It struggles during high-demand commuter windows, especially the AM and PM rush hours. In these panels, the cloud of points stretches upward far past the green line, showing that the model systematically under-predicts the busiest moments. Sharp surges in demand are hard to anticipate with simple temporal lags, so the model tends to flatten out the peaks. There is also more scatter on weekday rush hours than on weekends, reflecting the added variability of work-day travel.
+Where the model struggles: It struggles during high-demand commuter windows, especially the AM and PM rush hours. In these panels, the cloud of points stretches upward far past the green line, showing that the model systematically under-predicts the busiest moments. Sharp surges in demand are hard to anticipate with simple temporal lags, so the model tends to flatten out the peaks. There is also more scatter on weekday rush hours than on weekends, reflecting the added variability of work-day travel.
 
 In conclusion, **the model handles routine, low-volume times well, but it misses the sudden spikes that define heavy commuting periods.**
 
@@ -920,10 +928,10 @@ In this part, we are exploring whether prediction errors are clustered in certai
 ```{r spatial_errors}
 # 1. Calculate MAE by stations
 station_errors <- test %>%
-  filter(!is.na(pred2)) %>%
+  filter(!is.na(pred4)) %>%
   group_by(start_station, start_lat.x, start_lon.y) %>%
   summarize(
-    MAE = mean(abs(Trip_Count - pred2), na.rm = TRUE),
+    MAE = mean(abs(Trip_Count - pred4), na.rm = TRUE),
     avg_demand = mean(Trip_Count, na.rm = TRUE),
     .groups = "drop"
   ) %>%
@@ -990,10 +998,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```
 
-**Interpretation**:
-Errors form a dense cluster in and around Center City, extending slightly into University City and parts of South Philly.
-The neighborhoods in center city have the highest errors.Because these stations often sit near job centers, transit hubs, parks, and retail corridors — all places with unpredictable surges.
-In short, The model struggles where human behavior is least predictable and demand is most dynamic.
+**Interpretation**: Errors form a dense cluster in and around Center City, extending slightly into University City and parts of South Philly. The neighborhoods in center city have the highest errors.Because these stations often sit near job centers, transit hubs, parks, and retail corridors — all places with unpredictable surges. In short, The model struggles where human behavior is least predictable and demand is most dynamic.
 
 ## Temporal Error Patterns
 
@@ -1023,10 +1028,7 @@ ggplot(temporal_errors, aes(x = time_of_day, y = MAE, fill = day_type)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-**Interpretation**:
-When are errors highest?
-Errors peak during the commute periods: PM Rush and AM Rush.
-These periods have the most unpredictable spikes in demand.
+**Interpretation**:  Errors peak during the commute periods: PM Rush and AM Rush. These periods have the most unpredictable spikes in demand.
 
 ## Errors and Demographics
 
@@ -1064,17 +1066,13 @@ p3 <- ggplot(station_errors_demo, aes(x = Percent_White, y = MAE)) +
 grid.arrange(p1, p2, p3, ncol = 2)
 ```
 
-**Interpretation**:
-Prediction errors slightly related to neighborhood characteristics?
+**Interpretation**: Prediction errors slightly related to neighborhood characteristics?
 
-1. Higher-income neighborhoods show slightly higher errors.
-The trend line slopes upward: as median income increases, MAE tends to rise a bit. This likely reflects busier, more mixed-use areas where demand is less predictable.
+1.  Higher-income neighborhoods show slightly higher errors. The trend line slopes upward: as median income increases, MAE tends to rise a bit. This likely reflects busier, more mixed-use areas where demand is less predictable.
 
-2. Neighborhoods with high transit use show lower errors.
-Stations located in areas with more transit riders tend to have lower MAE. Transit-heavy areas typically have more stable, commute-driven travel patterns that are easier for the model to predict.
+2.  Neighborhoods with high transit use show lower errors. Stations located in areas with more transit riders tend to have lower MAE. Transit-heavy areas typically have more stable, commute-driven travel patterns that are easier for the model to predict.
 
-3. Stations in whiter neighborhoods show slightly higher errors.
-The relationship is mild, but the upward slope suggests that stations in predominantly white, higher-income areas may see more inconsistent demand—often driven by leisure or irregular trip purposes.
+3.  Stations in whiter neighborhoods show slightly higher errors. The relationship is mild, but the upward slope suggests that stations in predominantly white, higher-income areas may see more inconsistent demand—often driven by leisure or irregular trip purposes.
 
 ## Part : Feature Engineering & model improvement
 
