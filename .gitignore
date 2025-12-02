@@ -2,3 +2,10 @@
 **/*.quarto_ipynb
 .Rproj.user
 labs/midterm/data/opa_properties_public.csv 
+
+
+labs/lab_5/Gao_Xu_assignment_5_cache/
+labs/lab_5/Gao_Xu_assignment_5_cache/*
+
+
+*.rdb
