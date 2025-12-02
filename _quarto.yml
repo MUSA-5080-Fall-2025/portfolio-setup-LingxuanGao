@@ -33,6 +33,8 @@ website:
             text: "Lab 2: Spatial Analysis and Visualization-Healthcare Access and Equity in Pennsylvania"
           - href: labs/lab_4/Lingxuan_Gao_assignment_4.qmd
             text: "Lab 4: Spatial Predictive Analysis"
+          - href: labs/lab_5/Gao_Xu_assignment_5.qmd
+            text: "Lab 5: Space-Time Prediction"
       - text: Midterm
         menu:
           - href: "Midterm/Yang_Chen_Fang_Gao_Xiang_Zhao_Appendix.qmd"
