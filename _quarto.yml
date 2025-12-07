@@ -41,7 +41,11 @@ website:
             text: "Appendix"
           - href: "Midterm/Yang_Chen_Fang_Gao_Xiang_Zhao_Presentation.qmd"
             text: "Presentation"
-            
+      - text: Final
+        menu:
+          - href: "Final/Eviction.qmd"
+            text: "Eviction Risk Prediction in Philadelphia"
+              
 format:
   html:
     theme: cosmo
