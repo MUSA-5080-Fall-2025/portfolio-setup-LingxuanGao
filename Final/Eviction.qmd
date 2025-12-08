@@ -163,7 +163,17 @@ hotspots <- read_csv("data/philadelphia_hotspots_media_report.csv") %>%
 
 **Data sources**:
 
-Primary dataset: Eviction Lab – Philadelphia Tracking - City-level series - Tract-level monthly data over multiple years - Tract-level snapshot of Philadelphia eviction risk (since Nov 2024) - Group-level disparities - landlord hotspots
+Primary dataset: Eviction Lab – Philadelphia Tracking 
+
+- City-level series 
+
+- Tract-level monthly data over multiple years 
+
+- Tract-level snapshot of Philadelphia eviction risk (since Nov 2024) 
+
+- Group-level disparities 
+
+- landlord hotspots
 
 # 2. Exploratory Data Analysis
 
@@ -414,7 +424,13 @@ We want to add **structural predictors**:
 -   Landlord concentration (hotspots)\
 -   Housing quality (old violations)
 
-Additional dataset: ACS (American Community Survey) 5-year 2022 data for Philadelphia census tracts Historic code-violation (2012-2016) (From Licenses and Inspections Department of Philadelphia) 311 Service and Information Requests
+Additional dataset:
+
+- ACS (American Community Survey) 5-year 2022 data for Philadelphia census tracts 
+
+- Historic code-violation (2012-2016) (From Licenses and Inspections Department of Philadelphia)
+
+- 311 Service and Information Requests
 
 ## 3.1 Base tract list
 
@@ -795,7 +811,7 @@ train_set <- model_data %>% filter(period_year < 2025)
 test_set  <- model_data %>% filter(period_year == 2025)
 ```
 
-###4.2.2 Build 5 Competing Models
+### 4.2.2 Build 5 Competing Models
 
 We employed Hierarchical Model Building using Logistic Regression.
 
@@ -1040,7 +1056,7 @@ print(model_spatial_cv)
 
 Comparing this to our temporal test result (AUC \~0.969), the drop to 0.91 is expected and healthy. It indicates that while the model relies partly on local history ('Inertia'), it still retains excellent predictive power (0.91) even when blindfolded to specific neighborhood locations. This confirms the model has learned structural rules about eviction risk.
 
-#5. Prediction for 2026 (The Future)
+# 5. Prediction for 2026 (The Future)
 
 We use the "Full Integrated Model" (M5) to forecast risk. The input for this prediction is the data from the most recent period (Nov 2024 – Nov 2025).
 
@@ -1104,7 +1120,13 @@ High-Intensity Clusters: The darkest areas (probabilities \> 75%) are tightly cl
 
 ## 5.2.1 Visualize the Forecast (Binary Risk Map)
 
-We use three distinct cutoffs: - Aggressive (\> 0.3): This casts a wide net to catch as many potential eviction cases as possible, accepting a higher rate of false alarms. - Balanced (\> 0.5): This uses the standard statistical default. - Conservative (\> 0.8): This targets only the 'sure bets' to minimize wasted resources.
+We use three distinct cutoffs: 
+
+- Aggressive (\> 0.3): This casts a wide net to catch as many potential eviction cases as possible, accepting a higher rate of false alarms. 
+
+- Balanced (\> 0.5): This uses the standard statistical default. 
+
+- Conservative (\> 0.8): This targets only the 'sure bets' to minimize wasted resources.
 
 ```{r}
 # --- 1. Create Multiple Scenarios ---
@@ -1181,4 +1203,10 @@ Our Model 5 forecast projects that 71 census tracts will be classified as 'High 
 
 1.  **Reporting Bias in 311 data**: Our model uses 311 complaints as a proxy for housing distress.However, the tenants in the most vulnerable neighborhoods may be less likely to report violations than residents in gentrifying areas.For example, they fear landlord retaliations. So our model may paradoxically interpret a lack of complaints as "stability" in areas that are actually suffering from silent, unreported neglect.
 
-2.  **Reporting Bias in 311 data**: Our predictions operate at the Census Tract level. High-risk classification for a tract does not mean every property in that tract is at risk. So interventions should be verified at the individual property level to avoid wasting resources on stable buildings within distressed areas.
+2.  **Census-Tract Scale, Not Individual Properties**: Our predictions operate at the Census Tract level. High-risk classification for a tract does not mean every property in that tract is at risk. So interventions should be verified at the individual property level to avoid wasting resources on stable buildings within distressed areas.
+
+## 6.3 Recommendations
+
+1. For small set of extreme hotspots, we could operate direct rent relief, full legal representation, intensive case management. Also, we need to verify needs at the property/household level with local partners before committing these high-cost resources.
+
+2. For wider ring of at-risk neighborhoods around the hotspots,  we can operate low-cost interventions – flyers, text alerts, know-your-rights workshops, landlord engagement. Also we can use this tier to reach areas where 311 distress may be under-reported, and monitor for emerging hotspots to feed back into the model.
