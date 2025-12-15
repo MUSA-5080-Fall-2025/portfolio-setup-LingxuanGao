@@ -20,8 +20,18 @@ website:
             text: "Weekly Notes 04: Spatial Data & GIS Operations in R" 
           - href: weekly-notes/week-05-notes.qmd
             text: "Weekly Notes 05: Introduction to Linear Regression"
+          - href: weekly-notes/week-06-notes.qmd
+            text: "Weekly Notes 06: Spatial Machine Learning - Linear Regression Cont."
+          - href: weekly-notes/week-07-notes.qmd
+            text: "Weekly Notes 07: Spatial Machine Learning - Spatial Autocorrelation"
+          - href: weekly-notes/week-09-notes.qmd
+            text: "Weekly Notes 09: Predictive Policing, Dirty Data, and Count Regression"
+          - href: weekly-notes/week-10-notes.qmd
+            text: "Weekly Notes 10: Logistic Regression - The case of recidivism"
           - href: weekly-notes/week-11-notes.qmd
-            text: "Weekly Notes 11: Space-Time Prediction"
+            text: "Weekly Notes 11: Space-Time Modeling: Predicting Bike Share"
+          - href: weekly-notes/week-12-notes.qmd
+            text: "Weekly Notes 12: K-means and Sequence Analysis for Neighborhood Change"
       
       - text: Labs
         menu:
